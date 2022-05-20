@@ -61,7 +61,7 @@ export default function Home() {
         <Grid item style={{padding: "30px"}}>
             <h1> Your Rental Car Is One Click Away</h1>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={8} md={4}>
           <Paper>
             <Tabs
               value={value}
