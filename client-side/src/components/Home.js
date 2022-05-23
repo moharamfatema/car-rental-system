@@ -1,19 +1,12 @@
 import React from "react";
-import Login from "./Login";
+import Login from "./parts/Login";
 
-import Signup from "./Signup";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Signup from "./parts/Signup";
 import { Box, Tabs, Tab, Paper, Grid } from "@mui/material";
 import PropTypes from "prop-types";
 
 export default function Home() {
-  const theme = createTheme({
-    palette: {
-      mode: "dark",
-    },
-  });
-
-  function TabPanel(props) {
+    function TabPanel(props) {
     const { children, index, ...other } = props;
     return (
       <div
@@ -49,9 +42,7 @@ export default function Home() {
   const handleChange = (_event, newValue) => {
     setValue(newValue);
   };
-
   return (
-    <ThemeProvider theme={theme}>
       <Grid
         container
         alignItems="center"
@@ -82,6 +73,5 @@ export default function Home() {
           </Paper>
         </Grid>
       </Grid>
-    </ThemeProvider>
   );
 }

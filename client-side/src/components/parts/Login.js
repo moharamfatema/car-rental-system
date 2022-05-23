@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-export default function Signup() {
+export default function Login() {
   const validEmail = new RegExp(
     "^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$"
   );
@@ -20,14 +20,6 @@ export default function Signup() {
   const [errorMsg, setErrorMsg] = useState("Invalid Input!");
 
   const [user, setUser] = useState({
-    username: {
-      value: "",
-      type: "text",
-      name: "username",
-      label: "Username",
-      error: false,
-      helperText: "",
-    },
     email: {
       value: "",
       type: "email",
@@ -41,14 +33,6 @@ export default function Signup() {
       type: "password",
       name: "password",
       label: "Password",
-      error: false,
-      helperText: "",
-    },
-    confirmPassword: {
-      value: "",
-      name: "confirmPassword",
-      type: "password",
-      label: "Confirm Password",
       error: false,
       helperText: "",
     },
@@ -80,41 +64,6 @@ export default function Signup() {
 
       err = true;
     }
-    if (!user.username.value.trim()) {
-      setUser((olduser) => ({
-        ...olduser,
-        username: {
-          ...olduser["username"],
-          error: true,
-          helperText: "Username cannot be empty!",
-        },
-      }));
-
-      err = true;
-    } else {
-      setUser((olduser) => ({
-        ...olduser,
-        username: {
-          ...olduser["username"],
-          value: user.username.value.trim(),
-        },
-      }));
-    }
-    if (
-      !user.confirmPassword.value ||
-      user.confirmPassword.value !== user.password.value
-    ) {
-      setUser((olduser) => ({
-        ...olduser,
-        confirmPassword: {
-          ...olduser["confirmPassword"],
-          error: true,
-          helperText: "Passwords are not matching!",
-        },
-      }));
-
-      err = true;
-    }
     if (!validEmail.test(user.email.value)) {
       setUser((prevState) => ({
         ...prevState,
@@ -129,7 +78,7 @@ export default function Signup() {
 
     return !err;
   };
-  const url = "http://localhost:80/lab_2/signup.php";
+  const url = "http://localhost:80/lab_2/login.php";
   const welcomeurl = "http://localhost:80/lab_2/welcome.php";
   const onSubmit = (e) => {
     e.preventDefault();
@@ -144,20 +93,17 @@ export default function Signup() {
         body: JSON.stringify({
           email: user.email.value,
           pwd: user.password.value,
-          name: user.username.value,
         }),
       })
         .then((res) => res.json())
         .then((res) => {
-          if (res["error"] === "email-exists") {
-            setErrorMsg("Email Already Exists!");
+          if (res["error"] === "not-found") {
+            setErrorMsg("Incorrect E-mail or Password!");
             setOpen("true");
             console.log(res["error"]);
           } else {
-            console.log(res);
-            window.location.replace(
-              welcomeurl + "?name=" + user.username.value
-            );
+            localStorage.setItem('user_id',res['customer_id']);
+            window.location.replace(welcomeurl + "?name=" + res[2]);
           }
         })
         .catch((err) => {
@@ -171,20 +117,26 @@ export default function Signup() {
   return (
     <Stack spacing={3}>
       <form autocmplete="off" onSubmit={onSubmit} autoComplete="off">
-        {Object.entries(user).map((key, value) => {
-          return (
-            <Box sx={{ p: 2 }} key={value}>
-              <TextField
-                variant="filled"
-                required
-                fullWidth
-                color="primary"
-                {...user[key[0]]}
-                onChange={onChange}
-              />
-            </Box>
-          );
-        })}
+        <Box sx={{ p: 2 }}>
+          <TextField
+            variant="filled"
+            required
+            fullWidth
+            color="primary"
+            {...user["email"]}
+            onChange={onChange}
+          />
+        </Box>
+        <Box sx={{ p: 2 }}>
+          <TextField
+            variant="filled"
+            required
+            fullWidth
+            color="primary"
+            {...user["password"]}
+            onChange={onChange}
+          />
+        </Box>
         <Box sx={{ p: 2 }}>
           <Button
             variant="contained"
@@ -193,7 +145,7 @@ export default function Signup() {
             color="primary"
             onClick={onSubmit}
           >
-            Sign Up
+            Login
           </Button>
         </Box>
         <Box sx={{ p: 2 }}>
