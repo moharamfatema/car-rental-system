@@ -1,6 +1,8 @@
 import { React } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+import { Paper } from '@mui/material';
+
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -19,7 +21,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/reservation" element={<Reservation {...props}/>}/>
-          <Route path="/newcar" element={<NewCar />}/>
+          <Route path="/newcar" element={<Paper style={{width:'20'}}><NewCar /></Paper>}/>
           <Route path="/signup">{/* <SignUp/> */}</Route>
           <Route path="/login">{/* <Login /> */}</Route>
           <Route path="/profile">{/* <Profile/> */}</Route>

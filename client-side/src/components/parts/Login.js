@@ -11,9 +11,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 
 export default function Login() {
-  const validEmail = new RegExp(
-    "^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$"
-  );
+  const validEmail = /^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/;
 
   const [open, setOpen] = useState(false);
 

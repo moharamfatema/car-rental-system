@@ -1,5 +1,4 @@
-import { useState } from "react";
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Button,
@@ -8,10 +7,24 @@ import {
   Box,
   Alert,
   IconButton,
+  MenuItem
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 export default function NewCar() {
+  const validYear = /^(19|20)[\d]{2}$/;
+
+  const statuses = [
+    {
+      value: 'active',
+      label: 'Active'
+    },
+    {
+      value: 'outOfService',
+      label:'Out Of Service'
+    }
+  ]
+
   const [open, setOpen] = useState(false);
 
   const [errorMsg, setErrorMsg] = useState("Invalid Input!");
@@ -45,12 +58,19 @@ export default function NewCar() {
       value: new Date().getFullYear(),
       name: "year",
       label: "Year",
-      views: ["year"],
+      inputProps: { inputMode: "numeric", pattern: validYear },
       error: false,
       helperText: "",
     },
+    status:{
+      ...statuses[0],
+      select: true,
+      name: 'status',
+      label:'Status'
+
+    }
   });
-  const onSubmit = () => {};
+  
   const onChange = (e) => {
     let key = e.target.name;
     setCar({
@@ -63,14 +83,104 @@ export default function NewCar() {
       },
     });
   };
-  const shouldDisableYear = (year) => {
-    return year <= 2 + new Date().getFullYear() || year >= 1900;
+  const validate = () => {
+    let err = false;
+    if (!car.plateNumber.value.trim()) {
+      setCar((oldcar) => ({
+        ...oldcar,
+        plateNumber: {
+          ...oldcar["plateNumber"],
+          error: true,
+          helperText: "Plate Number cannot be empty!",
+        },
+      }));
+
+      err = true;
+    }
+    if (!car.brand.value.trim()) {
+      setCar((oldcar) => ({
+        ...oldcar,
+        brand: {
+          ...oldcar["brand"],
+          error: true,
+          helperText: "Brand cannot be empty!",
+        },
+      }));
+
+      err = true;
+    } else {
+      setCar((oldcar) => ({
+        ...oldcar,
+        brand: {
+          ...oldcar["brand"],
+          value: car.brand.value.trim(),
+        },
+      }));
+    }
+    if (!car.model.value.trim()) {
+      setCar((oldcar) => ({
+        ...oldcar,
+        model: {
+          ...oldcar["model"],
+          error: true,
+          helperText: "Model cannot be empty!",
+        },
+      }));
+
+      err = true;
+    } else {
+      setCar((oldcar) => ({
+        ...oldcar,
+        brand: {
+          ...oldcar["model"],
+          value: car.model.value.trim(),
+        },
+      }));
+    }
+    if (!validYear.test(car.year.value)) {
+      setCar((prevState) => ({
+        ...prevState,
+        year: {
+          ...prevState["year"],
+          error: true,
+          helperText: "Please enter a valid Year!",
+        },
+      }));
+      err = true;
+    }
+
+    return !err;
+  };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (validate()){console.log(car);}
+    
   };
 
   return (
     <Stack spacing={3}>
       <form autocmplete="off" onSubmit={onSubmit} autoComplete="off">
         {Object.entries(car).map((key, value) => {
+          if (car[key[0]].name === 'status'){
+            return(
+              <Box sx={{ p: 2 }} key={value}>
+              <TextField
+                variant="filled"
+                required
+                fullWidth
+                color="primary"
+                {...car[key[0]]}
+                onChange={onChange}>
+                  {statuses.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              
+            </Box>
+            );
+          }else{
           return (
             <Box sx={{ p: 2 }} key={value}>
               <TextField
@@ -82,7 +192,7 @@ export default function NewCar() {
                 onChange={onChange}
               />
             </Box>
-          );
+          );}
         })}
         <Box sx={{ p: 2 }}>
           <Button
