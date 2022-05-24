@@ -44,8 +44,8 @@ CREATE TABLE reservation(
     customer_id int,
     pickup_date datetime,
     reservation_id int UNIQUE,
-    pickup_office varchar(255),
-    return_office varchar(255),
+    pickup_office int,
+    return_office int,
     return_date datetime,
     booking_status ENUM('rented', 'returned'),
     payment_status ENUM('paid', 'not_paid'),
@@ -62,4 +62,6 @@ ADD FOREIGN KEY(plate_number) REFERENCES car(plate_number);
 
 ALTER TABLE reservation
 ADD FOREIGN KEY(plate_number) REFERENCES car(plate_number),
-ADD FOREIGN KEY(customer_id) REFERENCES customer(customer_id);
+ADD FOREIGN KEY(customer_id) REFERENCES customer(customer_id),
+ADD FOREIGN KEY(pickup_office) REFERENCES office(office_id),
+ADD FOREIGN KEY(return_office) REFERENCES office(office_id);
