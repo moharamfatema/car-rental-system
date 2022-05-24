@@ -65,7 +65,3 @@ ADD FOREIGN KEY(plate_number) REFERENCES car(plate_number),
 ADD FOREIGN KEY(customer_id) REFERENCES customer(customer_id),
 ADD FOREIGN KEY(pickup_office) REFERENCES office(office_id),
 ADD FOREIGN KEY(return_office) REFERENCES office(office_id);
-
-ALTER TABLE rented_by
-ADD FOREIGN KEY(plate_number) REFERENCES car(plate_number),
-ADD FOREIGN KEY(customer_id) REFERENCES customer(customer_id);
