@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-
+import { React, useState } from "react";
 import {
   Button,
   TextField,
@@ -11,17 +10,20 @@ import {
   IconButton,
   MenuItem,
 } from "@mui/material";
-import { useParams, useNavigate, useLocation, Navigate } from "react-router-dom";
+import {
+  useParams,
+  useNavigate,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
-
-export default function NewCar() {
+export default function CarSearch() {
   const validYear = /^(19|20)[\d]{2}$/;
-
-  let navigate = useNavigate();
-  let location = useLocation();
-  let params = useParams();
-
   const statuses = [
+    {
+      value: "",
+      label: "Status",
+    },
     {
       value: "active",
       label: "Active",
@@ -62,7 +64,7 @@ export default function NewCar() {
       helperText: "",
     },
     year: {
-      value: new Date().getFullYear(),
+      value: "",
       name: "year",
       label: "Year",
       inputProps: { inputMode: "numeric", pattern: validYear },
@@ -89,61 +91,26 @@ export default function NewCar() {
       },
     });
   };
+
   const validate = () => {
     let err = false;
-    if (!car.plateNumber.value.trim()) {
-      setCar((oldcar) => ({
-        ...oldcar,
-        plateNumber: {
-          ...oldcar["plateNumber"],
-          error: true,
-          helperText: "Plate Number cannot be empty!",
-        },
-      }));
+    setCar((oldcar) => ({
+      ...oldcar,
+      brand: {
+        ...oldcar["brand"],
+        value: car.brand.value.trim(),
+      },
+    }));
 
-      err = true;
-    }
-    if (!car.brand.value.trim()) {
-      setCar((oldcar) => ({
-        ...oldcar,
-        brand: {
-          ...oldcar["brand"],
-          error: true,
-          helperText: "Brand cannot be empty!",
-        },
-      }));
+    setCar((oldcar) => ({
+      ...oldcar,
+      model: {
+        ...oldcar["model"],
+        value: car.model.value.trim(),
+      },
+    }));
 
-      err = true;
-    } else {
-      setCar((oldcar) => ({
-        ...oldcar,
-        brand: {
-          ...oldcar["brand"],
-          value: car.brand.value.trim(),
-        },
-      }));
-    }
-    if (!car.model.value.trim()) {
-      setCar((oldcar) => ({
-        ...oldcar,
-        model: {
-          ...oldcar["model"],
-          error: true,
-          helperText: "Model cannot be empty!",
-        },
-      }));
-
-      err = true;
-    } else {
-      setCar((oldcar) => ({
-        ...oldcar,
-        model: {
-          ...oldcar["model"],
-          value: car.model.value.trim(),
-        },
-      }));
-    }
-    if (!validYear.test(car.year.value)) {
+    if (car.year.value.trim() && !validYear.test(car.year.value)) {
       setCar((prevState) => ({
         ...prevState,
         year: {
@@ -157,34 +124,39 @@ export default function NewCar() {
 
     return !err;
   };
-  const url = "http://localhost:80/carrental/newcar.php";
+  const url = "https://localhost:80/carrental/carsearch.php"; // TODO
   const onSubmit = (e) => {
     e.preventDefault();
-    if (validate()) {
+    let searchkeys = {};
+    Object.entries(car).map((key, value) => {
+      if (car[key[0]].value.trim() !== "") {
+        searchkeys[car[key[0]].name] = car[key[0]].value;
+      }
+    });
+    if (Object.keys(searchkeys).length === 0) {
+      setErrorMsg("Please enter at least one value to search with!");
+      setOpen("true");
+      console.log("Empty entries");
+    } else if (validate()) {
       console.log("OK");
+      console.log(searchkeys);
       fetch(url, {
         method: "POST",
 
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          plateNumber: car.plateNumber.value,
-          model: car.model.value,
-          brand: car.brand.value,
-          year: car.year.value,
-          status: car.status.value,
-        }),
+        body: JSON.stringify(searchkeys),
       })
         .then((res) => res.json())
         .then((res) => {
-          if (res["error"] === "car exists!") {
-            setErrorMsg("Car Already Exists!");
+          if (res["error"] === "no results") {
+            setErrorMsg("No Results!");
             setOpen("true");
             console.log(res["error"]);
           } else {
             console.log(res);
-            navigate("/" + location.search);
+            // navigate("/" + location.search);
           }
         })
         .catch((err) => {
@@ -194,7 +166,6 @@ export default function NewCar() {
         });
     }
   };
-  if (sessionStorage.getItem('isAdmin') === 'True'){
   return (
     <Grid
       container
@@ -204,7 +175,7 @@ export default function NewCar() {
     >
       <Grid item style={{ padding: "30px" }}>
         <h2 style={{ color: "white" }}>
-          Please Fill Out This Form To Register A New Car
+          Please Enter The Values You'd Like To Search For
         </h2>
       </Grid>
       <Grid item xs={8} md={4}>
@@ -217,7 +188,6 @@ export default function NewCar() {
                     <Box sx={{ p: 2 }} key={value}>
                       <TextField
                         variant="filled"
-                        required
                         fullWidth
                         color="primary"
                         {...car[key[0]]}
@@ -236,7 +206,6 @@ export default function NewCar() {
                     <Box sx={{ p: 2 }} key={value}>
                       <TextField
                         variant="filled"
-                        required
                         fullWidth
                         color="primary"
                         {...car[key[0]]}
@@ -254,7 +223,7 @@ export default function NewCar() {
                   color="primary"
                   onClick={onSubmit}
                 >
-                  Add Car
+                  Search
                 </Button>
               </Box>
               <Box sx={{ p: 2 }}>
@@ -287,8 +256,5 @@ export default function NewCar() {
         </Paper>
       </Grid>
     </Grid>
-  );}
-  else{
-    return (<Navigate to='/404' replace={true}/>);
-  }
+  );
 }

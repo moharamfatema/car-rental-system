@@ -11,6 +11,7 @@ import NotFound from "./components/NotFound";
 import Reservation from "./components/parts/Reservation";
 import NewCar from "./components/parts/NewCar";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CarSearch from "./components/parts/CarSearch";
 
 function App() {
   const theme = createTheme({
@@ -27,7 +28,7 @@ function App() {
             <Route exact path="/" element={<Home />} />
             <Route path="/reservation" element={<Reservation {...props} />} />
             <Route path="/newcar" element={<NewCar />} />
-            <Route path="/signup">{/* <SignUp/> */}</Route>
+            <Route path="/carsearch" element={<CarSearch/>}/>
             <Route path="/login">{/* <Login /> */}</Route>
             <Route path="/profile">{/* <Profile/> */}</Route>
             <Route path="*" element={<NotFound />} />
