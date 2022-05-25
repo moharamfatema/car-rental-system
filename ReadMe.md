@@ -34,6 +34,19 @@ car-rental-system (root)
             |_ Signup
             | ...
 ```
+## instructions
+
+### Setup (For the first time or after updates)
+- You need to have `node.js` or `yarn` installed on your machine.
+- Run `npm install` or `yarn install` in the root folder (from cmd) to download node modules.
+- Place the contents of the folder `server-side` inside the directory of `XAMPP\htdocs\carrental`.
+
+### running the app
+- Run XAMPP.
+- Run `npm start` in the `client-side` folder (from cmd).
+
+### Note
+You need to have a working internet connection to view the styling correctly (some fonts and the background picture are stored online).
 
 ## roles:
 
@@ -44,12 +57,14 @@ car-rental-system (root)
 
 ### Nada:
 
-- 
+- Queries
+- Back end
 
 ### Abdelwahab:
 
 - ERD
 - Schema
+- Back end
 
 
 
