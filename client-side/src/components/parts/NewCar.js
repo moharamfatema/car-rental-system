@@ -4,26 +4,33 @@ import {
   Button,
   TextField,
   Stack,
+  Grid,
+  Paper,
   Box,
   Alert,
   IconButton,
-  MenuItem
+  MenuItem,
 } from "@mui/material";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 
 export default function NewCar() {
   const validYear = /^(19|20)[\d]{2}$/;
 
+  let navigate = useNavigate();
+  let location = useLocation();
+  let params = useParams();
+
   const statuses = [
     {
-      value: 'active',
-      label: 'Active'
+      value: "active",
+      label: "Active",
     },
     {
-      value: 'outOfService',
-      label:'Out Of Service'
-    }
-  ]
+      value: "outOfService",
+      label: "Out Of Service",
+    },
+  ];
 
   const [open, setOpen] = useState(false);
 
@@ -62,15 +69,14 @@ export default function NewCar() {
       error: false,
       helperText: "",
     },
-    status:{
+    status: {
       ...statuses[0],
       select: true,
-      name: 'status',
-      label:'Status'
-
-    }
+      name: "status",
+      label: "Status",
+    },
   });
-  
+
   const onChange = (e) => {
     let key = e.target.name;
     setCar({
@@ -131,7 +137,7 @@ export default function NewCar() {
     } else {
       setCar((oldcar) => ({
         ...oldcar,
-        brand: {
+        model: {
           ...oldcar["model"],
           value: car.model.value.trim(),
         },
@@ -151,86 +157,136 @@ export default function NewCar() {
 
     return !err;
   };
+  const url = "http://localhost:80/carrental/newcar.php";
   const onSubmit = (e) => {
     e.preventDefault();
-    if (validate()){console.log(car);}
-    
+    if (validate()) {
+      console.log("OK");
+      fetch(url, {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          plateNumber: car.plateNumber.value,
+          model: car.model.value,
+          brand: car.brand.value,
+          year: car.year.value,
+          status: car.status.value,
+        }),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res["error"] === "car exists!") {
+            setErrorMsg("Car Already Exists!");
+            setOpen("true");
+            console.log(res["error"]);
+          } else {
+            console.log(res);
+            navigate("/" + location.search);
+          }
+        })
+        .catch((err) => {
+          setErrorMsg("An Error Ocurred! Please Try Again Later.");
+          setOpen("true");
+          console.log(err);
+        });
+    }
   };
 
   return (
-    <Stack spacing={3}>
-      <form autocmplete="off" onSubmit={onSubmit} autoComplete="off">
-        {Object.entries(car).map((key, value) => {
-          if (car[key[0]].name === 'status'){
-            return(
-              <Box sx={{ p: 2 }} key={value}>
-              <TextField
-                variant="filled"
-                required
-                fullWidth
-                color="primary"
-                {...car[key[0]]}
-                onChange={onChange}>
-                  {statuses.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              
-            </Box>
-            );
-          }else{
-          return (
-            <Box sx={{ p: 2 }} key={value}>
-              <TextField
-                variant="filled"
-                required
-                fullWidth
-                color="primary"
-                {...car[key[0]]}
-                onChange={onChange}
-              />
-            </Box>
-          );}
-        })}
-        <Box sx={{ p: 2 }}>
-          <Button
-            variant="contained"
-            type="submit"
-            fullWidth
-            color="primary"
-            onClick={onSubmit}
-          >
-            Add Car
-          </Button>
-        </Box>
-        <Box sx={{ p: 2 }}>
-          {open ? (
-            <Alert
-              show={open}
-              severity="error"
-              action={
-                <IconButton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
-                  onClick={() => {
-                    setOpen(false);
-                  }}
+    <Grid
+      container
+      alignItems="center"
+      justifyContent="center"
+      style={{ minHeight: "100vh" }}
+    >
+      <Grid item style={{ padding: "30px" }}>
+        <h2 style={{ color: "white" }}>
+          {" "}
+          Please Fill Out This Form To Register A New Car
+        </h2>
+      </Grid>
+      <Grid item xs={8} md={4}>
+        <Paper>
+          <Stack spacing={3}>
+            <form autocmplete="off" onSubmit={onSubmit} autoComplete="off">
+              {Object.entries(car).map((key, value) => {
+                if (car[key[0]].name === "status") {
+                  return (
+                    <Box sx={{ p: 2 }} key={value}>
+                      <TextField
+                        variant="filled"
+                        required
+                        fullWidth
+                        color="primary"
+                        {...car[key[0]]}
+                        onChange={onChange}
+                      >
+                        {statuses.map((option) => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Box>
+                  );
+                } else {
+                  return (
+                    <Box sx={{ p: 2 }} key={value}>
+                      <TextField
+                        variant="filled"
+                        required
+                        fullWidth
+                        color="primary"
+                        {...car[key[0]]}
+                        onChange={onChange}
+                      />
+                    </Box>
+                  );
+                }
+              })}
+              <Box sx={{ p: 2 }}>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  fullWidth
+                  color="primary"
+                  onClick={onSubmit}
                 >
-                  <CloseIcon fontSize="inherit" />
-                </IconButton>
-              }
-              sx={{ mb: 2 }}
-            >
-              {errorMsg}
-            </Alert>
-          ) : (
-            <></>
-          )}
-        </Box>
-      </form>
-    </Stack>
+                  Add Car
+                </Button>
+              </Box>
+              <Box sx={{ p: 2 }}>
+                {open ? (
+                  <Alert
+                    show={open}
+                    severity="error"
+                    action={
+                      <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                          setOpen(false);
+                        }}
+                      >
+                        <CloseIcon fontSize="inherit" />
+                      </IconButton>
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    {errorMsg}
+                  </Alert>
+                ) : (
+                  <></>
+                )}
+              </Box>
+            </form>
+          </Stack>
+        </Paper>
+      </Grid>
+    </Grid>
   );
 }
