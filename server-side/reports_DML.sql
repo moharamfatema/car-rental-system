@@ -9,3 +9,22 @@ WHERE R.pickup_date BETWEEN 'from_date_input' AND 'to_date_input';
 /*all reservations of any car within a specified period including all car
 information*/
 
+
+
+
+/*the status of all cars on a specific day*/
+
+
+
+
+/*all reservations of specific customer including customer information, car
+model and plate id*/
+
+SELECT CU.customer_id, CU.fname, CU.lname, CU.email, CU.phone_number, CU.password, C.model, C.plate_number, R.Pickup_date, R.reservation_id, R.pickup_office, R.return_office, R.return_date, R.booking_status, R.payment_status
+FROM customer AS CU LEFT JOIN reservation AS R ON CU.customer_id = R.customer_id JOIN car AS C ON R.plate_number = C.plate_number;
+
+
+
+
+/*daily payments within specific period*/
+
