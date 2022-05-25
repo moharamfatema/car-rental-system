@@ -9,13 +9,14 @@ WHERE R.pickup_date BETWEEN 'from_date_input' AND 'to_date_input';
 /*all reservations of any car within a specified period including all car
 information*/
 
-
+SELECT car.plate_number , car.model, car.brand car.year , car.status FROM (car RIGHT JOIN reservation ON car.plate_number=reservation.plate_number) 
+WHERE reservation.pickup_date BETWEEN 'from_date_input' AND 'to_date_input' 
 
 
 /*the status of all cars on a specific day*/
 
 
-
+SELECT car.status FROM (car LEFT JOIN reservation ON car.plate_number=reservation.plate_number) WHERE reservation.pickup_date='from_date_input' 
 
 /*all reservations of specific customer including customer information, car
 model and plate id*/
