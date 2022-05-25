@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import Login from "./parts/Login";
 
 import Signup from "./parts/Signup";
-import { Box, Tabs, Tab, Paper, Grid } from "@mui/material";
+import {
+  Box,
+  Tabs,
+  Tab,
+  Paper,
+  Grid,
+  BottomNavigation,
+  Button,
+} from "@mui/material";
 import PropTypes from "prop-types";
 
+import { useNavigate } from "react-router-dom";
 export default function Home() {
-    function TabPanel(props) {
+  const [navBarValue, setNavBarValue] = useState(0);
+  const navigate = useNavigate();
+
+  function TabPanel(props) {
     const { children, index, ...other } = props;
     return (
       <div
@@ -42,15 +54,16 @@ export default function Home() {
   const handleChange = (_event, newValue) => {
     setValue(newValue);
   };
-  return (
+  if (sessionStorage.getItem("customerId") === null) {
+    return (
       <Grid
         container
         alignItems="center"
         justifyContent="center"
         style={{ minHeight: "100vh" }}
       >
-        <Grid item style={{padding: "30px"}}>
-            <h1> Your Rental Car Is One Click Away</h1>
+        <Grid item style={{ padding: "30px" }}>
+          <h1> Your Rental Car Is One Click Away</h1>
         </Grid>
         <Grid item xs={8} md={4}>
           <Paper>
@@ -73,5 +86,29 @@ export default function Home() {
           </Paper>
         </Grid>
       </Grid>
-  );
+    );
+  } else {
+    return (
+      <BottomNavigation
+        showLabels
+        value={navBarValue}
+        onChange={(event, newValue) => {
+          setNavBarValue(newValue);
+        }}
+        style = {{backgroundColor:'rgba(0,0,0,0.5)'}}
+      >
+        <Button
+          variant="outlined"
+          onClick={(e) => {
+            sessionStorage.clear();
+            console.log("Logging out");
+            navigate("/", { replace: true });
+          }}
+        >
+          Log Out
+        </Button>
+      </BottomNavigation>
+      // <Navigate to="newcar" replacement={true} />
+    );
+  }
 }

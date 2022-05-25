@@ -10,23 +10,31 @@ import Home from "./components/Home";
 import NotFound from "./components/NotFound";
 import Reservation from "./components/parts/Reservation";
 import NewCar from "./components/parts/NewCar";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 function App() {
+  const theme = createTheme({
+    palette: {
+      mode: "dark",
+    },
+  });
   let props = { "Car ID": "ffdsd", "Res ID": "11" };
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route path="/reservation" element={<Reservation {...props} />} />
-          <Route path="/newcar" element={<NewCar />} />
-          <Route path="/signup">{/* <SignUp/> */}</Route>
-          <Route path="/login">{/* <Login /> */}</Route>
-          <Route path="/profile">{/* <Profile/> */}</Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <div className="App">
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route path="/reservation" element={<Reservation {...props} />} />
+            <Route path="/newcar" element={<NewCar />} />
+            <Route path="/signup">{/* <SignUp/> */}</Route>
+            <Route path="/login">{/* <Login /> */}</Route>
+            <Route path="/profile">{/* <Profile/> */}</Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

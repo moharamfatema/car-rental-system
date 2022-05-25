@@ -11,7 +11,7 @@ import {
   IconButton,
   MenuItem,
 } from "@mui/material";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useParams, useNavigate, useLocation, Navigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 
 export default function NewCar() {
@@ -194,7 +194,7 @@ export default function NewCar() {
         });
     }
   };
-
+  if (sessionStorage.getItem('isAdmin') === 'True'){
   return (
     <Grid
       container
@@ -288,5 +288,8 @@ export default function NewCar() {
         </Paper>
       </Grid>
     </Grid>
-  );
+  );}
+  else{
+    return (<Navigate to='/404' replace={true}/>);
+  }
 }
