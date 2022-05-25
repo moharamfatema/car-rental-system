@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/reservation" element={<Reservation {...props}/>}/>
-          <Route path="/newcar" element={<Paper style={{width:'20'}}><NewCar /></Paper>}/>
+          <Route path="/newcar" element={<Paper style={{maxWidth:'75vw',margin:'auto'}}><NewCar /></Paper>}/>
           <Route path="/signup">{/* <SignUp/> */}</Route>
           <Route path="/login">{/* <Login /> */}</Route>
           <Route path="/profile">{/* <Profile/> */}</Route>
