@@ -7,7 +7,7 @@
     session_start();
     $mysqli = new mysqli("localhost","root");    
     $mysqli -> select_db("car_rental_system");
-    $query = $mysqli->query("select * from user where email='".$data->email."' AND password='".$data->password."' ");
+    $query = $mysqli->query("select * from customer where email='".$data->email."' AND password='".$data->password."' ");
     if($query->num_rows)
     {
         //login success, go to search/reservation page
