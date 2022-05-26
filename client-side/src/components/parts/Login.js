@@ -76,8 +76,7 @@ export default function Login() {
 
     return !err;
   };
-  const url = "http://localhost:80/lab_2/login.php";
-  const welcomeurl = "http://localhost:80/lab_2/welcome.php";
+  const url = "http://localhost:80/carrental/customerLogin.php";
   const onSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
@@ -90,18 +89,18 @@ export default function Login() {
         },
         body: JSON.stringify({
           email: user.email.value,
-          pwd: user.password.value,
+          password: user.password.value,
         }),
       })
         .then((res) => res.json())
         .then((res) => {
-          if (res["error"] === "not-found") {
+          if (res["error"] === "Incorrect e-mail or password.") {
             setErrorMsg("Incorrect E-mail or Password!");
             setOpen("true");
             console.log(res["error"]);
           } else {
-            localStorage.setItem('user_id',res['customer_id']);
-            window.location.replace(welcomeurl + "?name=" + res[2]);
+            sessionStorage.setItem('user_id',res['customer_id']);
+            sessionStorage.setItem('isAdmin',res['isAdmin']);
           }
         })
         .catch((err) => {

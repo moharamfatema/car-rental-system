@@ -12,17 +12,33 @@ import CloseIcon from "@mui/icons-material/Close";
 
 export default function Signup() {
   const validEmail = /^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/;
-
+  const validPhone = /(\(?([\d \-\)\–\+\/\(]+){6,}\)?([ .\-–\/]?)([\d]+))/;
   const [open, setOpen] = useState(false);
 
   const [errorMsg, setErrorMsg] = useState("Invalid Input!");
 
   const [user, setUser] = useState({
-    username: {
+    fname: {
       value: "",
       type: "text",
-      name: "username",
-      label: "Username",
+      name: "fname",
+      label: "First Name",
+      error: false,
+      helperText: "",
+    },
+    lname: {
+      value: "",
+      type: "text",
+      name: "lname",
+      label: "Last Name",
+      error: false,
+      helperText: "",
+    },
+    phone_number: {
+      value: "",
+      type: "text",
+      name: "phone_number",
+      label: "Phone Number",
       error: false,
       helperText: "",
     },
@@ -78,13 +94,14 @@ export default function Signup() {
 
       err = true;
     }
-    if (!user.username.value.trim()) {
+    
+    if (!user.fname.value.trim()) {
       setUser((olduser) => ({
         ...olduser,
-        username: {
-          ...olduser["username"],
+        fname: {
+          ...olduser["fname"],
           error: true,
-          helperText: "Username cannot be empty!",
+          helperText: "First Name cannot be empty!",
         },
       }));
 
@@ -92,9 +109,29 @@ export default function Signup() {
     } else {
       setUser((olduser) => ({
         ...olduser,
-        username: {
-          ...olduser["username"],
-          value: user.username.value.trim(),
+        fname: {
+          ...olduser["fname"],
+          value: user.fname.value.trim(),
+        },
+      }));
+    }
+    if (!user.lname.value.trim()) {
+      setUser((olduser) => ({
+        ...olduser,
+        lname: {
+          ...olduser["lname"],
+          error: true,
+          helperText: "Last Name cannot be empty!",
+        },
+      }));
+
+      err = true;
+    } else {
+      setUser((olduser) => ({
+        ...olduser,
+        lname: {
+          ...olduser["lname"],
+          value: user.lname.value.trim(),
         },
       }));
     }
@@ -124,11 +161,22 @@ export default function Signup() {
       }));
       err = true;
     }
+    if (!validPhone.test(user.phone_number.value)) {
+      setUser((prevState) => ({
+        ...prevState,
+        phone_number: {
+          ...prevState["phone_number"],
+          error: true,
+          helperText: "Please enter a valid Phone Number!",
+        },
+      }));
+      err = true;
+    }
 
     return !err;
   };
-  const url = "http://localhost:80/lab_2/signup.php";
-  const welcomeurl = "http://localhost:80/lab_2/welcome.php";
+  const url = "http://localhost:80/carrental/customerReg.php";
+  const welcomeurl = "/";
   const onSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
@@ -137,12 +185,14 @@ export default function Signup() {
         method: "POST",
 
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/jsonp",
         },
         body: JSON.stringify({
+          fname: user.fname.value,
+          lname: user.lname.value,
           email: user.email.value,
-          pwd: user.password.value,
-          name: user.username.value,
+          password: user.password.value,
+          phone_number: user.phone_number.value
         }),
       })
         .then((res) => res.json())
@@ -154,12 +204,12 @@ export default function Signup() {
           } else {
             console.log(res);
             window.location.replace(
-              welcomeurl + "?name=" + user.username.value
+              welcomeurl + "?name=" + user.fname.value
             );
           }
         })
         .catch((err) => {
-          setErrorMsg("Error!");
+          setErrorMsg("Server Error!");
           setOpen("true");
           console.log(err);
         });

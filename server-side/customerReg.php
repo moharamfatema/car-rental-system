@@ -10,7 +10,7 @@
     $query = $mysqli->query("select * from customer where email='".$data->email."'");
     if($query->num_rows)
     {
-        $error= array("error"=>"E-mail already exists.");
+        $error= array("error"=>"email-exists");
         echo json_encode($error);
     }
     else
