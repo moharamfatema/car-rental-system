@@ -200,7 +200,7 @@ export default function NewCar() {
       container
       alignItems="center"
       justifyContent="center"
-      style={{ minHeight: "100vh" }}
+      style={{ minHeight: "100vh"}}
     >
       <Grid item style={{ padding: "30px" }}>
         <h2 style={{ color: "white" }}>
@@ -209,7 +209,7 @@ export default function NewCar() {
       </Grid>
       <Grid item xs={8} md={4} >
         <Paper>
-          <Stack spacing={3}>
+          <Stack spacing={3}  >
             <form autocmplete="off" onSubmit={onSubmit} autoComplete="off">
               {Object.entries(car).map((key, value) => {
                 if (car[key[0]].name === "status") {

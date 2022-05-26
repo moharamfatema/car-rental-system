@@ -23,7 +23,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <div className="App">
+        <div className="App" >
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route path="/reservation" element={<Reservation {...props} />} />

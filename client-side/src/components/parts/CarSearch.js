@@ -17,12 +17,13 @@ import {
   Navigate,
 } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
+
 export default function CarSearch() {
   const validYear = /^(19|20)[\d]{2}$/;
   const statuses = [
     {
       value: "",
-      label: "Status",
+      label: "Choose Status",
     },
     {
       value: "active",
@@ -34,11 +35,58 @@ export default function CarSearch() {
     },
   ];
 
+  const format = [{year:"numeric"}, {month:"2-digit"}, {day:"2-digit"}]
+  
+  const join = (t, a, s) => {
+    function format(m) {
+       let f = new Intl.DateTimeFormat('en', m);
+       return f.format(t);
+    }
+    return a.map(format).join(s);
+ }
+  const current = (offset=0) => {
+   return join(new Date().setDate(new Date().getDate() + offset), format,'-'); 
+  }
   const [open, setOpen] = useState(false);
 
   const [errorMsg, setErrorMsg] = useState("Invalid Input!");
 
   const [car, setCar] = useState({
+    pickupDate: {
+      value: current(),
+      name: "pickupDate",
+      label: "Pick-Up Date",
+      helperText: "",
+      error: false,
+      type:'date',
+      required:true
+
+    },
+    returnDate: {
+      value: current(5),
+      name: "returnDate",
+      label: "Return Date",
+      helperText: "",
+      error: false,
+      type:'date',
+      required:true
+
+    },pickupOffice: {
+      value: '',
+      name: "pickupOffice",
+      label: "Pick-Up Office",
+      helperText: "",
+      error: false,
+      required:true
+    }
+    ,returnOffice: {
+      value: '',
+      name: "returnOffice",
+      label: "Return Office",
+      helperText: "",
+      error: false,
+      required:true
+    },
     plateNumber: {
       value: "",
       type: "text",
@@ -71,16 +119,14 @@ export default function CarSearch() {
       error: false,
       helperText: "",
     },
-    status: {
-      ...statuses[0],
-      select: true,
-      name: "status",
-      label: "Status",
-    },
   });
+  
 
   const onChange = (e) => {
     let key = e.target.name;
+    if (car[key].type === 'date'){
+      // e.target.value = 
+    }
     setCar({
       ...car,
       [key]: {
@@ -90,6 +136,7 @@ export default function CarSearch() {
         helperText: "",
       },
     });
+    console.log(car[e.target.name]);
   };
 
   const validate = () => {
@@ -172,13 +219,15 @@ export default function CarSearch() {
       alignItems="center"
       justifyContent="center"
       style={{ minHeight: "100vh" }}
+      direction='column'
+
     >
       <Grid item style={{ padding: "30px" }}>
         <h2 style={{ color: "white" }}>
           Please Enter The Values You'd Like To Search For
         </h2>
       </Grid>
-      <Grid item xs={8} md={4}>
+      <Grid item xs={8} md={8} width='75%'>
         <Paper>
           <Stack spacing={3}>
             <form autocmplete="off" onSubmit={onSubmit} autoComplete="off">
