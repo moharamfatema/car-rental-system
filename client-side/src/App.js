@@ -10,6 +10,7 @@ import Home from "./components/Home";
 import NotFound from "./components/NotFound";
 import Reservation from "./components/parts/Reservation";
 import NewCar from "./components/parts/NewCar";
+import Car from "./components/parts/Car";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CarSearch from "./components/parts/CarSearch";
 
@@ -19,7 +20,7 @@ function App() {
       mode: "dark",
     },
   });
-  let props = { "Car ID": "ffdsd", "Res ID": "11" };
+  let props = { "plate_number": "ffdsd", "Res ID": "11" ,'Status':'Active'};
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
@@ -29,7 +30,7 @@ function App() {
             <Route path="/reservation" element={<Reservation {...props} />} />
             <Route path="/newcar" element={<NewCar />} />
             <Route path="/carsearch" element={<CarSearch/>}/>
-            <Route path="/login">{/* <Login /> */}</Route>
+            <Route path="/car" element={<Car {...props}/>}/>
             <Route path="/profile">{/* <Profile/> */}</Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
