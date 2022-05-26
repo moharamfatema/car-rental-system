@@ -157,7 +157,7 @@ export default function NewCar() {
 
     return !err;
   };
-  const url = "http://localhost:80/carrental/newcar.php";
+  const url = "http://localhost:80/carrental/NewCar.php";
   const onSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
@@ -207,7 +207,7 @@ export default function NewCar() {
           Please Fill Out This Form To Register A New Car
         </h2>
       </Grid>
-      <Grid item xs={8} md={4}>
+      <Grid item xs={8} md={6} >
         <Paper>
           <Stack spacing={3}>
             <form autocmplete="off" onSubmit={onSubmit} autoComplete="off">
