@@ -207,7 +207,7 @@ export default function NewCar() {
           Please Fill Out This Form To Register A New Car
         </h2>
       </Grid>
-      <Grid item xs={8} md={6} >
+      <Grid item xs={8} md={4} >
         <Paper>
           <Stack spacing={3}>
             <form autocmplete="off" onSubmit={onSubmit} autoComplete="off">

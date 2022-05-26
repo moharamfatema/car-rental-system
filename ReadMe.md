@@ -48,6 +48,25 @@ car-rental-system (root)
 ### Note
 You need to have a working internet connection to view the styling correctly (some fonts and the background picture are stored online).
 
+## Screenshots
+
+### Login/Signup pages
+
+![Login](client-side/screenshots/login.png)
+
+
+![Signup](client-side/screenshots/signup.png)
+
+
+### New Car Registration
+
+![New Car](client-side/screenshots/newcar.png)
+
+
+### Not Found Page
+
+![Not Found](client-side/screenshots/404.png)
+
 ## roles:
 
 ### Fatema:
@@ -65,6 +84,3 @@ You need to have a working internet connection to view the styling correctly (so
 - ERD
 - Schema
 - Back end
-
-
-
