@@ -62,6 +62,8 @@ elseif($data->reservationID !=""){
     WHERE reservation.reservation_id= '".$data->reservationID."' ");
 
 }
+$row = mysqli_fetch_row($query1);
+echo json_encode($row);
 
 
 
