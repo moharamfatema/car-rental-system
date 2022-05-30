@@ -13,6 +13,7 @@ import NewCar from "./components/parts/NewCar";
 import Car from "./components/parts/Car";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CarSearch from "./components/parts/CarSearch";
+import Reports from "./components/Reports";
 
 function App() {
   const theme = createTheme({
@@ -20,7 +21,7 @@ function App() {
       mode: "dark",
     },
   });
-  let props = { "plate_number": "ffdsd", "Res ID": "11" ,'Status':'Active'};
+  let props = { "plate_number": "ffdsd", "Res ID": "11" ,'Status':'Active',"reservation_id":'5','booking_status':'rented'};
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
@@ -31,7 +32,7 @@ function App() {
             <Route path="/newcar" element={<NewCar />} />
             <Route path="/carsearch" element={<CarSearch/>}/>
             <Route path="/car" element={<Car {...props}/>}/>
-            <Route path="/profile">{/* <Profile/> */}</Route>
+            <Route path="/reports" element={<Reports/>}/>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

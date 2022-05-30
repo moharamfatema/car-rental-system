@@ -43,11 +43,11 @@ CREATE TABLE reservation(
     plate_number int,
     customer_id int,
     pickup_date datetime,
-    reservation_id int UNIQUE,
+    reservation_id int UNIQUE auto_increment,
     pickup_office int,
     return_office int,
     return_date datetime,
-    booking_status ENUM('rented', 'returned'),
+    booking_status ENUM('reserved','rented', 'returned'),
     payment_status ENUM('paid', 'not_paid'),
     PRIMARY KEY(plate_number, customer_id, pickup_date)
     );

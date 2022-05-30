@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { useParams, useNavigate, useLocation, Navigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
+import NavBar from "./NavBar.js"
 
 export default function NewCar() {
   const validYear = /^(19|20)[\d]{2}$/;
@@ -196,6 +197,8 @@ export default function NewCar() {
   };
   if (sessionStorage.getItem('isAdmin') === 'True'){
   return (
+    <>
+    <NavBar current = "newcar"/>
     <Grid
       container
       alignItems="center"
@@ -287,6 +290,8 @@ export default function NewCar() {
         </Paper>
       </Grid>
     </Grid>
+    </>
+
   );}
   else{
     return (<Navigate to='/404' replace={true}/>);

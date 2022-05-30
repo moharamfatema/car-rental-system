@@ -14,6 +14,7 @@ import {
 import PropTypes from "prop-types";
 
 import { useNavigate } from "react-router-dom";
+import NavBar from "./parts/NavBar";
 export default function Home() {
   const [navBarValue, setNavBarValue] = useState(0);
   const navigate = useNavigate();
@@ -89,26 +90,7 @@ export default function Home() {
     );
   } else {
     return (
-      <BottomNavigation
-        showLabels
-        value={navBarValue}
-        onChange={(event, newValue) => {
-          setNavBarValue(newValue);
-        }}
-        style = {{backgroundColor:'rgba(0,0,0,0.5)'}}
-      >
-        <Button
-          variant="outlined"
-          onClick={(e) => {
-            sessionStorage.clear();
-            console.log("Logging out");
-            navigate("/", { replace: true });
-          }}
-        >
-          Log Out
-        </Button>
-      </BottomNavigation>
-      // <Navigate to="newcar" replacement={true} />
+      <NavBar current={'reports'}/>
     );
   }
 }
