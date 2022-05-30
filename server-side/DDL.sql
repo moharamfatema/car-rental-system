@@ -1,7 +1,7 @@
 CREATE DATABASE Car_Rental_System;
 
 CREATE TABLE customer(
-    customer_id int,
+    customer_id int auto_increment,
     fname varchar(255),
     lname varchar(255),
     email varchar(255) UNIQUE,

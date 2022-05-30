@@ -15,8 +15,8 @@
     }
     else
     {
-        $query = $mysqli->query("insert into customer (customer_id , fname, lname, email, phone_number, password) 
-        values ('".$data->customer_id."', '".$data->fname."', '".$data->lname."', '".$data->email."', '".$data->phone_number."', md5('".$data->password."'));");
+        $query = $mysqli->query("insert into customer (fname, lname, email, phone_number, password) 
+        values ('".$data->fname."', '".$data->lname."', '".$data->email."', '".$data->phone_number."', md5('".$data->password."'));");
         $res = array('OK'=>1);
         echo json_encode($res);
     }

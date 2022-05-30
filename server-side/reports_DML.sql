@@ -29,3 +29,4 @@ FROM customer AS CU LEFT JOIN reservation AS R ON CU.customer_id = R.customer_id
 
 /*daily payments within specific period*/
 
+SELECT reservation.reservation_id, reservation.Payment_status FROM (reservation) WHERE reservation.pickup_date BETWEEN 'from_date_input' AND 'to_date_input'
