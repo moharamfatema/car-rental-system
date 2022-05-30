@@ -26,17 +26,12 @@ export default function NavBar({ current }) {
         }}
         style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
       >
+        <BottomNavigationAction label="New Car" value="newcar" />
+        <BottomNavigationAction label="Reports" value="reports" />
         <BottomNavigationAction
-          label="New Car"
-          value="newcar"
-        ></BottomNavigationAction>
-        <BottomNavigationAction
-          label="Reports"
-          value="reports"
-        ></BottomNavigationAction>
-
-        {/*newacar*/}
-        {/*reports*/}
+          label="Advanced Search"
+          value="advancedsearch"
+        />
         <Button
           variant="outlined"
           onClick={(e) => {
@@ -57,10 +52,7 @@ export default function NavBar({ current }) {
         }}
         style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
       >
-        <BottomNavigationAction
-          label="Search Cars"
-          value="carsearch"
-        />
+        <BottomNavigationAction label="Search Cars" value="carsearch" />
         <Button
           variant="outlined"
           onClick={(e) => {

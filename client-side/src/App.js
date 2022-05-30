@@ -13,6 +13,7 @@ import NewCar from "./components/parts/NewCar";
 import Car from "./components/parts/Car";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CarSearch from "./components/parts/CarSearch";
+import AdvancedSearch from "./components/parts/AdvancedSearch";
 import Reports from "./components/Reports";
 
 function App() {
@@ -33,6 +34,8 @@ function App() {
             <Route path="/carsearch" element={<CarSearch/>}/>
             <Route path="/car" element={<Car {...props}/>}/>
             <Route path="/reports" element={<Reports/>}/>
+            <Route path="/advancedsearch" element={<AdvancedSearch/>}/>
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
