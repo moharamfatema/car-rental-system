@@ -53,7 +53,7 @@ export default function Car(props) {
               fetch(carreserveurl, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(props),
+                body: JSON.stringify({...props, customer_id:sessionStorage.getItem('customerId')}),
               });
             }}
           >
