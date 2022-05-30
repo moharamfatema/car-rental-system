@@ -11,7 +11,7 @@
     if($query->num_rows)
     {
         //login success, go to search/reservation page
-        header('Location: page.php');
+        //header('Location: page.php');
         $res = array("OK"=>1);
         echo json_encode($res);
     }
