@@ -67,6 +67,14 @@ You need to have a working internet connection to view the styling correctly (so
 
 ![Not Found](client-side/screenshots/404.png)
 
+### Reports Page
+
+![Reports](client-side/screenshots/reports.png)
+
+### Car Search Page
+
+![Car Search](client-side/screenshots/carsearch.png)
+
 ## roles:
 
 ### Fatema:
