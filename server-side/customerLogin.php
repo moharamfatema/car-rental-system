@@ -12,7 +12,14 @@
     {
         //login success, go to search/reservation page
         //header('Location: page.php');
-        $res = array("OK"=>1);
+        $result = mysqli_fetch_assoc($query);
+		//print_r($result);
+        if($result["customer_id"] == 2){
+            $isAdmin = "True";
+        }else{
+            $isAdmin = "False";
+        }
+        $res = array("OK"=>1, "isAdmin"=>$isAdmin,"customer_id"=>$result["customer_id"]);
         echo json_encode($res);
     }
     else

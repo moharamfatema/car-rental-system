@@ -79,6 +79,10 @@ export default function Login() {
   const url = "http://localhost:80/carrental/customerLogin.php";
   const onSubmit = (e) => {
     e.preventDefault();
+    console.log({
+      email: user.email.value,
+      password: user.password.value,
+    });
     if (validate()) {
       console.log("OK");
       fetch(url, {
@@ -99,8 +103,9 @@ export default function Login() {
             setOpen("true");
             console.log(res["error"]);
           } else {
-            sessionStorage.setItem('user_id',res['customer_id']);
+            sessionStorage.setItem('customerId',res['customer_id']);
             sessionStorage.setItem('isAdmin',res['isAdmin']);
+            console.log("Login Successful!");
           }
         })
         .catch((err) => {

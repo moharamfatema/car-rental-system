@@ -24,7 +24,7 @@
     {
         //show results
         //header('Location: page.php');
-        $row = mysqli_fetch_row($query)
+        $row = mysqli_fetch_row($query);
         echo json_encode($row);
     }
     else
