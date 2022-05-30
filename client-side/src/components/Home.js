@@ -88,9 +88,15 @@ export default function Home() {
         </Grid>
       </Grid>
     );
-  } else {
+  } else if (sessionStorage.getItem("isAdmin") === 'True') {
     return (
       <NavBar current={'reports'}/>
     );
   }
+  
+ else{
+ return (
+    <NavBar current={'carsearch'}/>
+  );
+}
 }

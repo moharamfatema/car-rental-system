@@ -1,32 +1,40 @@
 import React, { useEffect, useState } from "react";
 
-import { BottomNavigation, Button, BottomNavigationAction } from "@mui/material";
+import {
+  BottomNavigation,
+  Button,
+  BottomNavigationAction,
+} from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
 
-export default function NavBar({current}) {
+export default function NavBar({ current }) {
   const [navBarValue, setNavBarValue] = useState(current);
   const navigate = useNavigate();
 
   useEffect(() => {
-      navigate('/'+navBarValue,{repplace:"True"})
-  },[navBarValue,navigate])
+    navigate("/" + navBarValue, { repplace: "True" });
+  }, [navBarValue, navigate]);
 
   if (sessionStorage.getItem("isAdmin") === "True") {
     return (
       <BottomNavigation
-      showLabels
+        showLabels
         value={navBarValue}
         onChange={(event, newValue) => {
           setNavBarValue(newValue);
         }}
         style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
-      >  
-      <BottomNavigationAction label="New Car" value='newcar'>
-      </BottomNavigationAction>
-      <BottomNavigationAction label="Reports" value='reports'>
-      </BottomNavigationAction>
-        
+      >
+        <BottomNavigationAction
+          label="New Car"
+          value="newcar"
+        ></BottomNavigationAction>
+        <BottomNavigationAction
+          label="Reports"
+          value="reports"
+        ></BottomNavigationAction>
+
         {/*newacar*/}
         {/*reports*/}
         <Button
@@ -49,7 +57,10 @@ export default function NavBar({current}) {
         }}
         style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
       >
-        {/*reservations*/}
+        <BottomNavigationAction
+          label="Search Cars"
+          value="carsearch"
+        />
         <Button
           variant="outlined"
           onClick={(e) => {

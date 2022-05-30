@@ -9,6 +9,7 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const validEmail = /^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/;
@@ -35,6 +36,7 @@ export default function Login() {
       helperText: "",
     },
   });
+  const navigate = useNavigate();
 
   const onChange = (e) => {
     let key = e.target.name;
@@ -106,6 +108,7 @@ export default function Login() {
             sessionStorage.setItem('customerId',res['customer_id']);
             sessionStorage.setItem('isAdmin',res['isAdmin']);
             console.log("Login Successful!");
+            navigate('/',{replace:true})
           }
         })
         .catch((err) => {

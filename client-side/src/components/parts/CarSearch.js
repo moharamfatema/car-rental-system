@@ -17,6 +17,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
+import NavBar from "./NavBar";
 
 export default function CarSearch() {
   const validYear = /^(19|20)[\d]{2}$/;
@@ -214,6 +215,8 @@ export default function CarSearch() {
     }
   };
   return (
+    <>
+    <NavBar current={"carsearch"}/>
     <Grid
       container
       alignItems="center"
@@ -305,5 +308,6 @@ export default function CarSearch() {
         </Paper>
       </Grid>
     </Grid>
+    </>
   );
 }
