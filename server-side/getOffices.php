@@ -10,15 +10,7 @@
 
     //customer enters single input-->search the table on that input for the three specifications
     
-    $query = $mysqli->query("SELECT car.plate_number, car.model, car.brand, car.`year`
-    FROM car JOIN car_at_office ON car.plate_number = car_at_office.plate_number JOIN office ON car_at_office.office_id = office.office_id
-    WHERE office.office_id = ".intval($data->pickupOffice)." AND (car.model = '".$data->model."' OR car.brand = '".$data->brand."' OR car.`year` = ".$data->year.") AND
-    car.status = 'active' AND
-    NOT EXISTS (SELECT rented_by.plate_number
-              FROM rented_by
-              WHERE car.plate_number = rented_by.plate_number
-              );
-     ");
+    $query = $mysqli->query("SELECT * FROM office");
 
     if($query->num_rows)
     {
@@ -29,7 +21,7 @@
     }
     else
     {
-         $error= array("error"=>"No cars with the entered specification found.");
+         $error= array("error"=>"no-offices");
          echo json_encode($error);
     }
     ?>
