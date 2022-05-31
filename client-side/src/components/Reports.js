@@ -88,11 +88,11 @@ export default function Reports() {
     const reportThreeText =
       "All reservations of specific customer including customer information, car model and plate id.";
   const reportOneUrl =
-    "https://localhost:80/carrental/All _reservations_within_period.php";
+    "https://localhost:80/carrental/All_reservations_within_period.php";
   const reportTwoUrl =
-    "https://localhost:80/carrental/All reservations_of_any_car_within_period.php";
+    "https://localhost:80/carrental/All_reservations_of_any_car_within_period.php";
     const reportThreeUrl =
-    "https://localhost:80/carrental/All reservations_of_specific_customer.php";
+    "https://localhost:80/carrental/All_reservations_of_specific_customer.php";
   if (sessionStorage.getItem("isAdmin") === "True") {
     return (
         <>
@@ -283,8 +283,6 @@ export default function Reports() {
                   onClick={(e) => {
                     console.log("Report Three:");
                     let inputs = {
-                      FromDate: reportThreeInputs.fromDate.value,
-                      ToDate: reportThreeInputs.toDate.value,
                       CustomerId: reportThreeInputs.customerId.value,
                     };
                     console.log(inputs);

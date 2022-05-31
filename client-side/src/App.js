@@ -10,7 +10,7 @@ import Home from "./components/Home";
 import NotFound from "./components/NotFound";
 import Reservation from "./components/parts/Reservation";
 import NewCar from "./components/parts/NewCar";
-import Car from "./components/parts/Car";
+import DisplayCars from "./components/parts/DisplayCars";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CarSearch from "./components/parts/CarSearch";
 import AdvancedSearch from "./components/parts/AdvancedSearch";
@@ -22,7 +22,8 @@ function App() {
       mode: "dark",
     },
   });
-  let props = { "plate_number": "ffdsd", "Res ID": "11" ,'Status':'Active',"reservation_id":'5','booking_status':'rented'};
+  //car.plate_number, car.model, car.brand, car.`year`
+  let props = [{ "id": "0", "model": "11" ,'brand':'Active',"year":'5'}];
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
@@ -32,7 +33,7 @@ function App() {
             <Route path="/reservation" element={<Reservation {...props} />} />
             <Route path="/newcar" element={<NewCar />} />
             <Route path="/carsearch" element={<CarSearch/>}/>
-            <Route path="/car" element={<Car {...props}/>}/>
+            <Route path="/displaycars" element={<DisplayCars />}/>
             <Route path="/reports" element={<Reports/>}/>
             <Route path="/advancedsearch" element={<AdvancedSearch/>}/>
 

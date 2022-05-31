@@ -7,6 +7,11 @@ import {
 } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import ContentPasteSearchIcon from "@mui/icons-material/ContentPasteSearch";
+import LogoutIcon from "@mui/icons-material/Logout";
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function NavBar({ current }) {
   const [navBarValue, setNavBarValue] = useState(current);
@@ -26,17 +31,27 @@ export default function NavBar({ current }) {
         }}
         style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
       >
-        <BottomNavigationAction label="New Car" value="newcar" />
-        <BottomNavigationAction label="Reports" value="reports" />
+        <BottomNavigationAction
+          label="New Car"
+          value="newcar"
+          icon={<DirectionsCarIcon />}
+        />
+        <BottomNavigationAction
+          label="Reports"
+          value="reports"
+          icon={<ListAltIcon />}
+        />
         <BottomNavigationAction
           label="Advanced Search"
           value="advancedsearch"
+          icon={<ContentPasteSearchIcon />}
         />
         <Button
-          variant="outlined"
+          startIcon={<LogoutIcon />}
           onClick={(e) => {
             sessionStorage.clear();
             console.log("Logging out");
+            navigate("/", { replace: true });
           }}
         >
           Log Out
@@ -52,9 +67,9 @@ export default function NavBar({ current }) {
         }}
         style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
       >
-        <BottomNavigationAction label="Search Cars" value="carsearch" />
+        <BottomNavigationAction label="Search Cars" value="carsearch" icon={<SearchIcon/>}/>
         <Button
-          variant="outlined"
+          startIcon={<LogoutIcon />}
           onClick={(e) => {
             sessionStorage.clear();
             console.log("Logging out");

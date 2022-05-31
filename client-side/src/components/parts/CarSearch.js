@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import {
   Button,
   TextField,
@@ -20,6 +20,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import NavBar from "./NavBar";
 
 export default function CarSearch() {
+  const navigate = useNavigate();
   const validYear = /^(19|20)[\d]{2}$/;
   const statuses = [
     {
@@ -35,6 +36,44 @@ export default function CarSearch() {
       label: "Out Of Service",
     },
   ];
+  const offices = useRef([]);
+  useEffect(()=>{
+    fetch("http://localhost/carrental/getOffices.php",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+    })
+    .then((res)=>res.json())
+    .then((res)=>{
+      //console.log(res);
+      offices.current = [];
+      res.forEach(element => {
+        offices.current = offices.current.concat([
+          {
+            value:element.office_id,
+            label:element.country + ", "+element.city+", "+element.address
+          }
+        ]);
+      });
+      setCar({
+        ...car,
+        pickupOffice: {
+          ...car['pickupOffice'],
+          ...offices.current[0],label:"Pickup Office"
+        },
+        returnOffice: {
+          ...car['returnOffice'],
+          ...offices.current[0]
+          ,label:"Return Office"
+        },
+      });
+      console.log(offices.current);
+    })
+    .catch((err) => {
+      setErrorMsg("no-offices");
+      setOpen("true");
+      console.log(err);
+    });
+  },[]);
 
   const format = [{year:"numeric"}, {month:"2-digit"}, {day:"2-digit"}]
   
@@ -73,20 +112,18 @@ export default function CarSearch() {
       required:true
 
     },pickupOffice: {
-      value: '',
+      ...offices.current[0],
       name: "pickupOffice",
       label: "Pick-Up Office",
-      helperText: "",
-      error: false,
-      required:true
+      select : true,
+
     }
     ,returnOffice: {
-      value: '',
+      ...offices.current[0],
       name: "returnOffice",
       label: "Return Office",
-      helperText: "",
-      error: false,
-      required:true
+
+      select:true
     },
     plateNumber: {
       value: "",
@@ -137,7 +174,6 @@ export default function CarSearch() {
         helperText: "",
       },
     });
-    console.log(car[e.target.name]);
   };
 
   const validate = () => {
@@ -172,7 +208,7 @@ export default function CarSearch() {
 
     return !err;
   };
-  const url = "https://localhost:80/carrental/carsearch.php"; // TODO
+  const url = "http://localhost:80/carrental/customerSearch.php"; // TODO
   const onSubmit = (e) => {
     e.preventDefault();
     let searchkeys = {};
@@ -204,7 +240,7 @@ export default function CarSearch() {
             console.log(res["error"]);
           } else {
             console.log(res);
-            // navigate("/" + location.search);
+            navigate("/displaycars" ,{state:{rows:res}});
           }
         })
         .catch((err) => {
@@ -253,7 +289,24 @@ export default function CarSearch() {
                       </TextField>
                     </Box>
                   );
-                } else {
+                } else if (car[key[0]].name === "pickupOffice" || car[key[0]].name === "returnOffice") {
+                  return (
+                    <Box sx={{ p: 2 }} key={value}>
+                      <TextField
+                        variant="filled"
+                        fullWidth
+                        color="primary"
+                        {...car[key[0]]}
+                        onChange={onChange}
+                      >
+                        {offices.current.map((option) => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Box>
+                  );}else{
                   return (
                     <Box sx={{ p: 2 }} key={value}>
                       <TextField
