@@ -27,39 +27,52 @@ elseif($data->year !=""){
     WHERE car.year= '".$data->year."' ");
 
 }
-elseif($data->status !=""){
+
+
+elseif($data->fname !=""){
     $query1 = mysqli_query($con,"SELECT * FROM ((reservation INNER JOIN car ON reservation.plate_number=car.plate_number)INNER JOIN customer ON reservation.customer_id=customer.customer_id) 
-    WHERE car.status= '".$data->status."' ");
+    WHERE customer.fname= '".$data->fname."' ");
 
 }
-elseif($data->customerID !=""){
+elseif($data->lname !=""){
     $query1 = mysqli_query($con,"SELECT * FROM ((reservation INNER JOIN car ON reservation.plate_number=car.plate_number)INNER JOIN customer ON reservation.customer_id=customer.customer_id) 
-    WHERE customer.customer_id= '".$data->customerID."' ");
+    WHERE customer.lname= '".$data->lname."' ");
 
 }
-elseif($data->Fname !=""){
+elseif($data->phone_number !=""){
     $query1 = mysqli_query($con,"SELECT * FROM ((reservation INNER JOIN car ON reservation.plate_number=car.plate_number)INNER JOIN customer ON reservation.customer_id=customer.customer_id) 
-    WHERE customer.fname= '".$data->Fname."' ");
+    WHERE customer.phone_number= '".$data->phone_number."' ");
 
 }
-elseif($data->Lname !=""){
+elseif($data->email !=""){
     $query1 = mysqli_query($con,"SELECT * FROM ((reservation INNER JOIN car ON reservation.plate_number=car.plate_number)INNER JOIN customer ON reservation.customer_id=customer.customer_id) 
-    WHERE customer.lname= '".$data->Lname."' ");
+    WHERE customer.E-mail= '".$data->email."' ");
 
 }
-elseif($data->phoneNum !=""){
+elseif($data->pickupDate !=""){
     $query1 = mysqli_query($con,"SELECT * FROM ((reservation INNER JOIN car ON reservation.plate_number=car.plate_number)INNER JOIN customer ON reservation.customer_id=customer.customer_id) 
-    WHERE customer.phone_number= '".$data->phoneNum."' ");
+    WHERE reservation.pickup_date= '".$data->pickupDate."' ");
 
 }
-elseif($data->reservationDate !=""){
+
+elseif($data->returnDate !=""){
     $query1 = mysqli_query($con,"SELECT * FROM ((reservation INNER JOIN car ON reservation.plate_number=car.plate_number)INNER JOIN customer ON reservation.customer_id=customer.customer_id) 
-    WHERE reservation.pickup_date= '".$data->reservationDate."' ");
+    WHERE reservation.return_date= '".$data->returnDate."' ");
 
 }
-elseif($data->reservationID !=""){
+elseif($data->pickupOffice !=""){
     $query1 = mysqli_query($con,"SELECT * FROM ((reservation INNER JOIN car ON reservation.plate_number=car.plate_number)INNER JOIN customer ON reservation.customer_id=customer.customer_id) 
-    WHERE reservation.reservation_id= '".$data->reservationID."' ");
+    WHERE reservation.Pickup_office= '".$data->pickupOffice."' ");
+
+}
+elseif($data->returnOffice !=""){
+    $query1 = mysqli_query($con,"SELECT * FROM ((reservation INNER JOIN car ON reservation.plate_number=car.plate_number)INNER JOIN customer ON reservation.customer_id=customer.customer_id) 
+    WHERE reservation.Return_office= '".$data->returnOffice."' ");
+
+}
+elseif($data->reservation_id !=""){
+    $query1 = mysqli_query($con,"SELECT * FROM ((reservation INNER JOIN car ON reservation.plate_number=car.plate_number)INNER JOIN customer ON reservation.customer_id=customer.customer_id) 
+    WHERE reservation.reservation_id= '".$data->reservation_id."' ");
 
 }
 $row = mysqli_fetch_row($query1);
